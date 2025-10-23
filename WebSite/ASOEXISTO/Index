@@ -1,0 +1,2142 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asociación de Recicladores Existo Ambiental</title>
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>tailwind.config={theme:{extend:{colors:{primary:'#1F8036',secondary:'#235D29',tertiary_light:'#73B139'},borderRadius:{'none':'0px',DEFAULT:'8px','md':'12px','lg':'16px','xl':'20px','2xl':'24px','3xl':'32px','full':'9999px','button':'8px'}}}}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+<style>
+/* Asegura que todos los iconos de Remixicon tengan un contenido por defecto */
+:where([class^="ri-"])::before { content: "\f3c2"; }
+
+/* Animaciones CSS existentes para la sección Hero (carga inicial) */
+@keyframes slideDown {
+  from { transform: translateY(-100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+/* Animaciones para iconos */
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.1); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(5px); }
+  75% { transform: translateX(-5px); }
+}
+
+/* Aplicación de animaciones a elementos específicos */
+.hero-content {
+  animation: slideDown 1s ease-out forwards;
+}
+
+.hero-image {
+  animation: slideDown 1.2s ease-out forwards;
+}
+
+.impact-image {
+  animation: slideDown 1s ease-out forwards;
+}
+
+/* Clases para los efectos de iconos */
+.icon-bounce {
+  animation: bounce 2s infinite;
+  display: inline-block;
+}
+
+.icon-pulse {
+  animation: pulse 2s infinite;
+  display: inline-block;
+}
+
+.icon-spin {
+  animation: spin 3s linear infinite;
+  display: inline-block;
+}
+
+.icon-shake {
+  animation: shake 1s infinite;
+  display: inline-block;
+}
+
+/* -------------------------- */
+/* Nuevas animaciones para el desplazamiento (scroll) */
+/* -------------------------- */
+.scroll-animate {
+  opacity: 0;
+  /* Transición suave para la opacidad y la transformación */
+  transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-animate.from-bottom {
+  transform: translateY(50px); /* Empieza 50px abajo */
+}
+.scroll-animate.from-left {
+  transform: translateX(-50px); /* Empieza 50px a la izquierda */
+}
+.scroll-animate.from-right {
+  transform: translateX(50px); /* Empieza 50px a la derecha */
+}
+
+/* Estado final de la animación: visible y en su posición original */
+.scroll-animate.animated {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Estilos para animaciones de entrada y salida en las tarjetas de normatividad */
+.animate-in {
+    animation: fadeIn 0.8s ease-out forwards;
+}
+.animate-out {
+    animation: fadeOut 0.8s ease-out forwards;
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+    to {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+    }
+}
+
+
+/* -------------------------- */
+/* Estilos generales para HTML/Body (cursor restaurado) */
+/* -------------------------- */
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Evita el scroll horizontal */
+}
+
+body {
+    cursor: auto; /* Restaura el cursor por defecto del navegador */
+}
+
+/* Estilos para el header fijo */
+#mainHeader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 100; /* Asegura que esté por encima de otros elementos */
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: all 0.3s ease-in-out;
+}
+
+/* Ajuste de relleno para el contenido principal */
+#main-content {
+    padding-top: 80px; /* Altura aproximada del header. Ajusta si es necesario */
+}
+
+/* Estilos para el efecto hover en tarjetas de servicio */
+.service-details {
+  max-height: 0; /* Inicialmente oculto */
+  opacity: 0; /* Inicialmente transparente */
+  overflow: hidden; /* Oculta el contenido que se desborda */
+  transition: max-height 0.8s ease-out, opacity 0.8s ease-out; /* Transición suave, duración aumentada */
+}
+
+.service-details.show-details {
+  max-height: 200px; /* Suficiente altura para mostrar el contenido */
+  opacity: 1; /* Completamente visible */
+}
+
+/* Estilos para la barrita animada */
+.service-barrita {
+  height: 2px; /* Altura de la barrita */
+  background-color: #4ade80; /* Color primario */
+  width: 0; /* Inicialmente oculta */
+  opacity: 0; /* Inicialmente transparente */
+  margin-top: 1rem; /* Espacio arriba de la barrita */
+  margin-bottom: 1rem; /* Espacio debajo de la barrita */
+  transition: width 0.5s ease-out, opacity 0.5s ease-out; /* Animación de aparición */
+}
+
+.service-card:hover .service-barrita {
+  width: 100%; /* Se expande al 100% al hacer hover */
+  opacity: 1; /* Se vuelve visible */
+}
+
+/* -------------------------- */
+/* Estilos para el carrusel de logos en la sección de Tarifas */
+/* -------------------------- */
+.carousel-wrapper {
+    width: 100%;
+    overflow: hidden; /* Oculta los logos que están fuera de la vista */
+    padding: 2rem 0; /* Espacio vertical para el carrusel */
+}
+
+.carousel-track {
+    display: flex;
+    white-space: nowrap; /* Mantiene todos los elementos en una sola línea */
+    animation: scroll-logos 30s linear infinite; /* Animación de desplazamiento continuo */
+    /* Ajusta la duración (30s) para controlar la velocidad. Menos segundos = más rápido. */
+}
+
+.carousel-track:hover {
+    animation-play-state: paused; /* Pausa el carrusel al pasar el mouse por encima */
+}
+
+@keyframes scroll-logos {
+    from { transform: translateX(0%); }
+    to { transform: translateX(-50%); } /* Desplaza el 50% del ancho total del track para un bucle perfecto */
+}
+
+.tarifas-logo-container {
+    flex-shrink: 0; /* Evita que los logos se encojan */
+    width: 200px; /* Ancho fijo para cada contenedor de logo */
+    height: 120px; /* Altura fija para cada contenedor de logo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 1.5rem; /* p-6 */
+    border-radius: 1rem; /* rounded-2xl */
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05); /* shadow-lg */
+    transition: all 0.3s ease-in-out; /* Transición para hover */
+    margin-right: 2rem; /* Espacio entre los logos */
+}
+
+.tarifas-logo-container:hover {
+    transform: translateY(-5px) scale(1.05); /* Pequeño levantamiento y escala al hacer hover */
+    box-shadow: 20px 25px -5px rgba(0, 0, 0, 0.1), 10px 10px -5px rgba(0, 0, 0, 0.04); /* shadow-xl */
+}
+
+.tarifas-logo-container img {
+    max-height: 100%; /* Asegura que la imagen no se desborde del contenedor */
+    max-width: 100%; /* Asegura que la imagen no se desborde del contenedor */
+    object-fit: contain; /* Asegura que la imagen se ajuste sin recortarse */
+}
+
+/* Estilos para los selectores de año/mes/familia */
+.sub-period-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-top: 1rem;
+    margin-bottom: 2rem; /* Espacio debajo de los filtros */
+}
+
+.sub-period-filter-button {
+    background-color: #ffffff;
+    border: 1px solid #e5e7eb;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    color: #4b5563;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.sub-period-filter-button:hover {
+    background-color: #4ade80;
+    color: #ffffff;
+    border-color: #4ade80;
+}
+
+.sub-period-filter-button.active {
+    background-color: #16a34a; /* Color secundario para activo */
+    color: #ffffff;
+    border-color: #16a34a;
+    font-weight: 600;
+}
+/* Ajuste de posición del separador */
+.separador {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin-top: -102px; /* 🔹 súbelo: puedes probar -40px, -50px, etc. */
+  z-index: 10;
+}
+
+.separator-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+}
+/* --- SOMBRA PARA TEXTO DEL BANNER --- */
+.hero h1,
+.hero h2,
+.hero h3,
+.hero p,
+.banner h1,
+.banner h2,
+.banner h3,
+.banner p {
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+}
+.flecha-quienes {
+  position: absolute;
+  bottom: -65px; /* súbela un poco dentro del contenedor */
+  right: -160px; /* la empuja un poco fuera del borde derecho */
+  width: 480px; /* tamaño ajustable */
+  transform: rotate(-18deg); /* ligera inclinación como la imagen original */
+  z-index: 10;
+  pointer-events: none;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3));
+}
+
+.relative {
+  overflow: visible; /* permite que la flecha se vea aunque salga del borde */
+}
+/* --- Sección Misión / Visión --- */
+@media (min-width: 1024px) {
+  .mision-vision-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.bg-[#5F9D37] {
+  background-color: #5F9D37;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.shadow-lg {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+/* === ESTILOS TARJETAS DE NORMATIVIDAD === */
+
+.norma-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: all 0.3s ease;
+  height: 100%;
+}
+
+.norma-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Ícono PDF animado */
+.norma-icon {
+  width: 4rem;
+  height: 4rem;
+  background: #fee2e2;
+  border-radius: 0.75rem;
+  margin: 0 auto 1rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: iconShake 2.5s infinite ease-in-out;
+}
+
+.norma-icon i {
+  font-size: 1.75rem;
+  color: #dc2626;
+}
+
+@keyframes iconShake {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(8deg);
+  }
+  50% {
+    transform: rotate(-8deg);
+  }
+  75% {
+    transform: rotate(5deg);
+  }
+}
+
+/* Títulos y texto */
+.norma-card h3 {
+  font-weight: 700;
+  color: #111827;
+  font-size: 1.1rem;
+}
+
+.norma-card p {
+  color: #4b5563;
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+/* Link */
+.card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+}
+.servicios-section {
+  background-image: url('Recursos/fondo services.png');
+  background-size: 115%;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 5rem 1.5rem;
+}
+
+.servicios-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.servicios-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.servicios-header h2 {
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+.servicios-header p {
+  color: #d7fdd2;
+  font-size: 1.1rem;
+  margin-top: 0.5rem;
+}
+
+/* Acordeón */
+.accordion {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.accordion-item {
+  background: #ffffff;
+  border-radius: 1rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-bottom: 1.25rem;
+}
+
+.accordion-item:hover {
+  transform: translateY(-3px);
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 1.5rem;
+  transition: background 0.3s ease;
+}
+
+.accordion-header:hover {
+  background: #f0fdf4;
+}
+
+.accordion-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.accordion-info h3 {
+  font-size: 1.25rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.icon i {
+  color: #fff;
+  font-size: 1.5rem;
+}
+
+.bg-primary {
+  background-color: #5F9D37;
+}
+
+.bg-secondary {
+  background-color: #3e7e22;
+}
+
+.arrow {
+  font-size: 1.8rem;
+  color: #5F9D37;
+  transition: transform 0.3s ease;
+}
+
+.rotate {
+  transform: rotate(180deg);
+}
+
+/* Contenido del acordeón */
+.accordion-content {
+  display: none;
+  padding: 0 1.5rem 1.5rem;
+  color: #555;
+  line-height: 1.6;
+  border-top: 1px solid #e5e5e5;
+}
+
+.accordion-content.open {
+  display: block;
+}
+
+.accordion-content ul {
+  margin-top: 0.8rem;
+  padding-left: 1.5rem;
+  color: #666;
+  font-size: 0.95rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .servicios-header h2 {
+    font-size: 2rem;
+  }
+
+  .accordion-info h3 {
+    font-size: 1.1rem;
+  }
+
+  .accordion-header {
+    padding: 1.2rem;
+  }
+}
+.icon-custom {
+  width: 30px;
+  height: 40px;
+  display: block;
+  margin: 0 auto;
+  filter: brightness(0) invert(1); /* convierte el ícono a blanco */
+  transition: transform 0.3s ease;
+}
+
+.icon-custom:hover {
+  transform: scale(1.1);
+}
+/* ==== Efecto de zoom en el mapa ==== */
+.zoom-map {
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+
+.zoom-map:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+/* ====== Efecto de zoom normal ====== */
+.zoom-map {
+  transition: transform 0.4s ease, box-shadow 0.3s ease;
+  cursor: pointer;
+}
+.zoom-map:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ====== Modal del mapa ====== */
+.map-modal {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  padding-top: 60px;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.8);
+  justify-content: center;
+  align-items: center;
+}
+
+.map-modal-content {
+  max-width: 80%;
+  max-height: 80%;
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+  transition: transform 0.3s ease;
+}
+
+.cerrar {
+  position: absolute;
+  top: 20px;
+  right: 35px;
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.cerrar:hover {
+  color: #ff4444;
+}
+</style>
+<!-- FAVICON ASOEXISTO -->
+<link rel="icon" type="image/png" sizes="32x32" href="Recursos/ASOEXISTO_FAVICON.png">
+<link rel="icon" type="image/png" sizes="16x16" href="Recursos/ASOEXISTO_FAVICON.png">
+<link rel="apple-touch-icon" href="Recursos/ASOEXISTO_FAVICON.png">
+<link rel="shortcut icon" href="Recursos/ASOEXISTO_FAVICON.png" type="image/x-icon">
+</head>
+<body class="bg-white">
+
+    <header id="mainHeader" class="bg-white shadow-sm border-b border-gray-100">
+  <nav class="max-w-7xl mx-auto px-6 py-4">
+    <div class="flex items-center justify-between">
+      <!-- Logo ASOEXISTO -->
+      <div class="flex items-center space-x-3">
+        <div class="flex items-center justify-center">
+          <img src="Recursos/logo menu.png" alt="Logo ASOEXISTO" class="h-16 w-auto object-contain">
+        </div>
+      </div>
+
+      <!-- Enlaces de Navegación -->
+      <div class="flex items-center space-x-8">
+        <a href="#inicio" class="text-gray-700 hover:text-primary transition-colors">Inicio</a>
+        <a href="#servicios" class="text-gray-700 hover:text-primary transition-colors">Servicios</a>
+        <a href="#nosotros" class="text-gray-700 hover:text-primary transition-colors">Nosotros</a>
+        <a href="#reportes" class="text-gray-700 hover:text-primary transition-colors">Reportes</a>
+        <a href="#tarifas" class="text-gray-700 hover:text-primary transition-colors">Tarifas</a>
+        <a href="#rutas" class="text-gray-700 hover:text-primary transition-colors">Rutas</a>
+        <a href="#contacto" class="text-gray-700 hover:text-primary transition-colors">Contacto</a>
+        <a href="Recursos/DINC ASOEXISTO.pdf" target="_blank" class="text-gray-700 hover:text-primary transition-colors">DINC</a>
+        <a href="novedades.php" class="bg-primary text-white px-6 py-2 rounded-button hover:bg-secondary transition-colors whitespace-nowrap">
+          Novedades
+        </a>
+      </div>
+    </div>
+  </nav>
+</header>
+
+    <div id="main-content">
+        <section id="inicio" class="relative min-h-screen overflow-hidden">
+            <div class="absolute inset-0" style="background-image: url('https://static.readdy.ai/image/4c71ef16b735e1a59b97fa7d53a7f218/9ad316b082eadfc545fc4966ac3eabbf.jfif'); background-size: cover; background-position: center;"></div>
+            <div class="relative w-full px-6 py-20" style="padding-top: 100px;">
+                <div class="max-w-7xl mx-auto">
+                    <div class="grid lg:grid-cols-2 gap-12 items-center min-h-[600px]">
+                        <div class="space-y-8 hero-content">
+                            <div class="space-y-6">
+                                <h1 class="text-5xl lg:text-6xl font-bold text-white leading-tight">
+                                    Transformamos el
+                                    <span class="text-white">Reciclaje</span>
+                                    en Acción Positiva
+                                </h1>
+                                <p class="text-xl text-white leading-relaxed">
+                                    Somos una asociación comprometida con la sostenibilidad ambiental,
+                                    uniendo comunidades para crear un futuro más verde y próspero para todos.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="relative hero-image">
+                            <img src="https://static.readdy.ai/image/4c71ef16b735e1a59b97fa7d53a7f218/375a75a040397af118c3c70cbd26fd2d.png" alt="Equipo de Recicladores" class="w-full h-auto rounded-2xl shadow-2xl object-cover impact-image">
+                            <div class="absolute -bottom-6 -left-6 bg-white p-6 rounded-xl shadow-lg">
+  <div class="flex items-center space-x-3">
+    <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+      <i class="ri-leaf-line text-white text-xl icon-bounce"></i>
+    </div>
+    <div>
+      <a href="Recursos/Portafolio de servicios ASOEXISTO.pdf" target="_blank"
+         class="text-lg font-bold text-gray-900 hover:text-primary transition-colors duration-300">
+        Conoce Nuestro Portafolio
+      </a>
+      <div class="text-sm text-gray-600">Impacto Positivo</div>
+    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- ======= Separador entre Banner y Quienes Somos ======= -->
+        <div class="separador">
+  <img src="Recursos/separador banner.png" alt="Cuidemos el mundo juntos" class="separator-img">
+        </div>
+        <section id="nosotros" class="py-20 bg-white scroll-animate from-bottom">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-16 items-center">
+                    <div class="space-y-8">
+                        <div class="space-y-4">
+                            <h2 class="text-4xl font-bold text-gray-900">¿Quiénes Somos?</h2>
+                            <div class="w-20 h-1 bg-primary"></div>
+                        </div>
+                        <div class="space-y-6 text-gray-600 text-lg leading-relaxed">
+                            <p>
+                                En la Asociación de Recicladores Existo Ambiental – ASOEXISTO,
+                                trabajamos con el propósito de impulsar el aprovechamiento de los residuos reciclables, fortaleciendo el crecimiento empresarial de nuestros asociados y dignificando la labor de los recicladores de oficio.
+                                Somos una organización comprometida con el desarrollo social y económico de nuestra comunidad, donde el reciclaje no solo es una actividad ambiental, sino también una oportunidad de progreso y bienestar para quienes lo ejercen.
+                            </p>
+                            <p>
+                                A través de la unión y la formalización, buscamos construir un futuro sostenible y próspero para nuestros integrantes y la sociedad en general.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="relative">
+                        <img src="https://readdy.ai/api/search-image?query=professional%20recycling%20facility%20worker%20in%20green%20uniform%20sorting%20recyclable%20materials%2C%20modern%20clean%20sorting%20facility%20with%20organized%20bins%20and%20conveyor%20belts%2C%20bright%20industrial%20lighting%2C%20sustainable%20waste%20management%20concept%2C%20eco-friendly%20workplace%20environment&width=600&height=500&seq=about001&orientation=landscape" alt="Trabajador de Reciclaje" class="w-full h-auto rounded-2xl shadow-xl object-cover">
+                        <img src="Recursos/flecha quienes.png" alt="Decoración flecha" class="flecha-quienes">
+                        <div class="absolute top-6 right-6 bg-white p-4 rounded-xl shadow-lg">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                <span class="text-sm font-semibold text-gray-700">En Operación</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="mision-vision" class="scroll-animate from-right bg-[#5F9D37] text-white py-16 overflow-hidden">
+  <div class="w-full flex flex-col lg:flex-row items-center justify-between px-8 lg:px-24 space-y-10 lg:space-y-0 slide-in-right">
+    
+    <!-- Misión -->
+    <div class="flex items-center justify-center lg:w-1/2 space-x-6 text-left">
+      <img src="Recursos/mision.png" alt="Logo Misión" class="h-24 w-auto">
+      <p class="text-lg leading-relaxed max-w-md">
+        Nuestra misión es liderar el aprovechamiento sostenible de residuos sólidos, fortaleciendo a ASOEXISTO y mejorando las condiciones de los recicladores mediante una economía circular que promueve desarrollo social y ambiental.
+      </p>
+    </div>
+
+    <!-- Separador -->
+    <div class="relative flex justify-center items-center lg:w-[6%]">
+      <div class="h-32 w-[2px] bg-black"></div>
+      <div class="absolute bg-yellow-300 rounded-full w-6 h-6"></div>
+    </div>
+
+    <!-- Visión -->
+    <div class="flex items-center justify-center lg:w-1/2 space-x-6 text-right">
+      <p class="text-lg leading-relaxed max-w-md">
+        En 2029, ASOEXISTO será una asociación modelo en el reciclaje, reconocida por su innovación, eficiencia y compromiso con el bienestar de los recicladores, consolidándose como una organización sostenible con impacto positivo ambiental, social y económico.
+      </p>
+      <img src="Recursos/vision.png" alt="Logo Visión" class="h-24 w-auto">
+    </div>
+  </div>
+</section>
+       
+        <section class="py-20 bg-[#F2F8ED] scroll-animate from-bottom relative">
+            <!-- Flecha verde apuntando a la derecha -->
+            <img src="Recursos/flecha quienes.png" alt="Flecha Verde Objetivos" 
+     class="arrow-right-icon hidden lg:block"
+     style="
+        position: absolute;
+        right: 1350px;          /* la mueve a la derecha */
+        top: 70%;             /* la baja más hacia el centro */
+        transform: translateY(-50%) scaleX(-1); /* la voltea hacia la derecha */
+        width: 420px;         /* aumenta tamaño */
+        height: auto;
+        z-index: 10;
+     " />
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Nuestros Objetivos</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">
+                        Trabajamos con propósito claro hacia un futuro más sostenible y equitativo
+                    </p>
+                </div>
+                <!-- Fila 1: Tarjetas 1 a 4 -->
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <!-- Tarjeta Objetivo 1: Eficiencia y Ampliación de Capacidad -->
+                    <div class="objective-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer text-center">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-recycle-line text-white text-2xl icon-pulse"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Reciclaje Eficiente</h3>
+                        <p class="text-gray-600 mb-4">Ampliar la capacidad de recuperación y comercialización de materiales reciclables.</p>
+                        <div class="objective-details hidden">
+                            <div class="border-t pt-4 mt-4">
+                                <p class="text-sm text-gray-500">Garantizar un manejo responsable y eficiente de los residuos aprovechables.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tarjeta Objetivo 2: Desarrollo Social y Beneficios -->
+                    <div class="objective-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer text-center">
+                        <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-team-line text-white text-2xl icon-pulse"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Desarrollo Social</h3>
+                        <p class="text-gray-600 mb-4">Brindar mayores beneficios sociales y económicos a los recicladores de oficio y sus familias.</p>
+                        <div class="objective-details hidden">
+                            <div class="border-t pt-4 mt-4">
+                                <p class="text-sm text-gray-500">Consolidar alianzas estratégicas que impulsen el desarrollo de la asociación.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tarjeta Objetivo 3: Educación y Fortalecimiento Empresarial -->
+                    <div class="objective-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer text-center">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-leaf-line text-white text-2xl icon-pulse"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Educación Ambiental</h3>
+                        <p class="text-gray-600 mb-4">Promover la educación ambiental y la cultura del aprovechamiento en la comunidad.</p>
+                        <div class="objective-details hidden">
+                            <div class="border-t pt-4 mt-4">
+                                <p class="text-sm text-gray-500">Fortalecer el crecimiento empresarial de ASOEXISTO mediante procesos de organización, capacitación y sostenibilidad económica.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Tarjeta Objetivo 4: Manejo Responsable -->
+                    <div class="objective-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer text-center">
+                        <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-earth-line text-white text-2xl icon-pulse"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Manejo Responsable</h3>
+                        <p class="text-gray-600 mb-4">Garantizar un manejo responsable y eficiente de los residuos aprovechables.</p>
+                        <div class="objective-details hidden">
+                            <div class="border-t pt-4 mt-4">
+                                <p class="text-sm text-gray-500">Consolidar alianzas estratégicas que impulsen el desarrollo de la asociación.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Fila 2: Tarjetas 5 y 6 (Centradas) -->
+                <div class="flex flex-wrap justify-center gap-8 mt-8">
+                    <!-- Tarjeta Objetivo 5: Crecimiento Empresarial -->
+                    <div class="objective-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer text-center w-full md:w-[48%] lg:w-1/4">
+                        <div class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-line-chart-line text-white text-2xl icon-pulse"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Crecimiento Empresarial</h3>
+                        <p class="text-gray-600 mb-4">Fortalecer el crecimiento empresarial de ASOEXISTO mediante procesos de organización, capacitación y sostenibilidad económica.</p>
+                        <div class="objective-details hidden">
+                            <div class="border-t pt-4 mt-4">
+                                <p class="text-sm text-gray-500">Ampliación de capacidad de recuperación y comercialización de materiales reciclables.</p>
+                            </div>
+                        </div>
+                    </div>
+                     <!-- Tarjeta Objetivo 6: Alianzas Estratégicas -->
+                    <div class="objective-card bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer text-center w-full md:w-[48%] lg:w-1/4">
+                        <div class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="ri-handshake-line text-white text-2xl icon-pulse"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-4">Alianzas Estratégicas</h3>
+                        <p class="text-gray-600 mb-4">Consolidar alianzas estratégicas que impulsen el desarrollo de la asociación.</p>
+                        <div class="objective-details hidden">
+                            <div class="border-t pt-4 mt-4">
+                                <p class="text-sm text-gray-500">Promover la educación ambiental y la cultura del aprovechamiento en la comunidad.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section id="valores" class="py-20 bg-white scroll-animate from-bottom">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">VALORES</h2>
+                    <p class="text-xl text-gray-600 max-w-3xl mx-auto">Principios que guían nuestra labor diaria.</p>
+                </div>
+                <!-- Contenedor para la fila horizontal de valores -->
+                <!-- Asegura que los 5 elementos se distribuyan uniformemente en una sola fila para lg y se envuelvan para md/sm -->
+                <div class="flex flex-wrap justify-center gap-6">
+                    <!-- Tarjeta Valor 1: SOLIDARIDAD -->
+                    <div class="service-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-full md:w-[48%] lg:w-[18%] max-w-xs">
+                        <h3 class="text-xl font-bold text-primary mb-2">SOLIDARIDAD</h3>
+                        <div class="service-barrita"></div>
+                        <div class="service-details">
+                            <p class="text-sm text-gray-600">Apoyamos a cada reciclador como parte fundamental de nuestra misión, fomentando la unión y el trabajo colectivo.</p>
+                        </div>
+                    </div>
+                    <!-- Tarjeta Valor 2: RESPONSABILIDAD -->
+                    <div class="service-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-full md:w-[48%] lg:w-[18%] max-w-xs">
+                        <h3 class="text-xl font-bold text-primary mb-2">RESPONSABILIDAD</h3>
+                        <div class="service-barrita"></div>
+                        <div class="service-details">
+                            <p class="text-sm text-gray-600">Comprometidos con el cuidado del planeta mediante prácticas de aprovechamiento que reducen el impacto de los residuos.</p>
+                        </div>
+                    </div>
+                    <!-- Tarjeta Valor 3: HONESTIDAD -->
+                    <div class="service-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-full md:w-[48%] lg:w-[18%] max-w-xs">
+                        <h3 class="text-xl font-bold text-primary mb-2">HONESTIDAD</h3>
+                        <div class="service-barrita"></div>
+                        <div class="service-details">
+                            <p class="text-sm text-gray-600">Actuamos con transparencia y rectitud en todos nuestros procesos y relaciones.</p>
+                        </div>
+                    </div>
+                    <!-- Tarjeta Valor 4: RESPETO -->
+                    <div class="service-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-full md:w-[48%] lg:w-[18%] max-w-xs">
+                        <h3 class="text-xl font-bold text-primary mb-2">RESPETO</h3>
+                        <div class="service-barrita"></div>
+                        <div class="service-details">
+                            <p class="text-sm text-gray-600">Valoramos la dignidad, el esfuerzo y la experiencia de cada reciclador de oficio, reconociendo su aporte a la sociedad.</p>
+                        </div>
+                    </div>
+                    <!-- Tarjeta Valor 5: COMPROMISO -->
+                    <div class="service-card bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer w-full md:w-[48%] lg:w-[18%] max-w-xs">
+                        <h3 class="text-xl font-bold text-primary mb-2">COMPROMISO</h3>
+                        <div class="service-barrita"></div>
+                        <div class="service-details">
+                            <p class="text-sm text-gray-600">Impulsamos el bienestar colectivo a través del trabajo asociativo y la inclusión de las comunidades en nuestras acciones.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <section id="servicios" class="servicios-section">
+  <div class="servicios-container">
+    <div class="servicios-header">
+      <h2>Servicios de Integralidad</h2>
+      <p>Ofrecemos soluciones completas para la gestión integral de residuos reciclables</p>
+    </div>
+
+    <ul class="accordion">
+      <!-- Servicio 1 -->
+      <li class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-info">
+            <div class="icon bg-primary">
+              <i class="ri-leaf-line"></i>
+            </div>
+            <h3>Recuperación</h3>
+          </div>
+          <i class="ri-arrow-down-s-line arrow"></i>
+        </div>
+        <div class="accordion-content">
+          <p>Rescatamos los residuos reciclables y los reincorporamos en la cadena productiva, evitando que terminen en rellenos sanitarios y generando nuevas oportunidades de aprovechamiento.</p>
+          <ul>
+            <li>• Iniciamos el proceso de aprovechamiento.</li>
+            <li>• Reducción del impacto ambiental.</li>
+          </ul>
+        </div>
+      </li>
+
+  <!-- Servicio 2 -->
+<li class="accordion-item">
+  <div class="accordion-header">
+    <div class="accordion-info">
+      <div class="icon bg-secondary">
+        <img src="Recursos/CARRETILLA.svg" alt="Carretilla" class="icon-custom">
+      </div>
+      <h3>Recolección</h3>
+    </div>
+    <i class="ri-arrow-down-s-line arrow"></i>
+  </div>
+  <div class="accordion-content">
+    <p>Realizamos la recolección selectiva en hogares, empresas e instituciones, asegurando que los materiales sean tratados adecuadamente desde la fuente.</p>
+    <ul>
+      <li>• Rutas planificadas y eficientes.</li>
+      <li>• Recolección a domicilio y empresarial.</li>
+    </ul>
+  </div>
+</li>
+
+<!-- Servicio 3 -->
+<li class="accordion-item">
+  <div class="accordion-header">
+    <div class="accordion-info">
+      <div class="icon bg-primary">
+        <i class="ri-truck-line"></i>
+      </div>
+      <h3>Transporte</h3>
+    </div>
+    <i class="ri-arrow-down-s-line arrow"></i>
+  </div>
+  <div class="accordion-content">
+    <p>Garantizamos el traslado oportuno y seguro de los residuos aprovechables hacia los centros de acopio y clasificación.</p>
+    <ul>
+      <li>• Traslado seguro a centros de acopio.</li>
+      <li>• Integridad garantizada del material.</li>
+    </ul>
+  </div>
+</li>
+
+      <!-- Servicio 4 -->
+      <li class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-info">
+            <div class="icon bg-secondary">
+              <i class="ri-scales-line"></i>
+            </div>
+            <h3>Pesaje</h3>
+          </div>
+          <i class="ri-arrow-down-s-line arrow"></i>
+        </div>
+        <div class="accordion-content">
+          <p>Registramos con precisión cada material recuperado, ofreciendo transparencia, confianza y control en todo el proceso.</p>
+          <ul>
+            <li>• Registro de peso con precisión.</li>
+            <li>• Transparencia y control total.</li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- Servicio 5 -->
+      <li class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-info">
+            <div class="icon bg-primary">
+              <i class="ri-filter-line"></i>
+            </div>
+            <h3>Selección</h3>
+          </div>
+          <i class="ri-arrow-down-s-line arrow"></i>
+        </div>
+        <div class="accordion-content">
+          <p>Clasificamos los residuos de acuerdo con su tipo y calidad, optimizando su valor en el mercado y contribuyendo a la sostenibilidad.</p>
+          <ul>
+            <li>• Clasificación por tipo y calidad.</li>
+            <li>• Optimización del valor en el mercado.</li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- Servicio 6 -->
+      <li class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-info">
+            <div class="icon bg-secondary">
+              <i class="ri-inbox-archive-line"></i>
+            </div>
+            <h3>Almacenamiento</h3>
+          </div>
+          <i class="ri-arrow-down-s-line arrow"></i>
+        </div>
+        <div class="accordion-content">
+          <p>Disponemos de espacios seguros y organizados para conservar los materiales, manteniendo sus condiciones óptimas hasta su comercialización.</p>
+          <ul>
+            <li>• Espacios seguros y organizados.</li>
+            <li>• Conservación de condiciones óptimas.</li>
+          </ul>
+        </div>
+      </li>
+
+      <!-- Servicio 7 -->
+      <li class="accordion-item">
+        <div class="accordion-header">
+          <div class="accordion-info">
+            <div class="icon bg-primary">
+              <i class="ri-money-dollar-circle-line"></i>
+            </div>
+            <h3>Comercialización</h3>
+          </div>
+          <i class="ri-arrow-down-s-line arrow"></i>
+        </div>
+        <div class="accordion-content">
+          <p>Gestionamos la venta de los residuos reciclables, promoviendo precios justos y garantizando beneficios económicos para los recicladores.</p>
+          <ul>
+            <li>• Venta con precios justos.</li>
+            <li>• Generación de beneficios económicos.</li>
+          </ul>
+        </div>
+      </li>
+    </ul>
+  </div>
+</section>
+<script>
+  // JS del acordeón
+  document.querySelectorAll(".accordion-header").forEach(header => {
+    header.addEventListener("click", () => {
+      const content = header.nextElementSibling;
+      const icon = header.querySelector(".arrow");
+
+      // Cierra los demás
+      document.querySelectorAll(".accordion-content").forEach(c => {
+        if (c !== content) c.classList.remove("open");
+      });
+      document.querySelectorAll(".accordion-header .arrow").forEach(i => {
+        if (i !== icon) i.classList.remove("rotate");
+      });
+
+      // Alterna el actual
+      content.classList.toggle("open");
+      icon.classList.toggle("rotate");
+    });
+  });
+</script>
+
+       <section id="rutas" class="py-20 bg-cover bg-right bg-no-repeat"
+    style="background-image: url('Recursos/fondo rutas.png');background-size: 30%;">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Rutas y Horarios</h2>
+                    <p class="text-xl text-gray-600">Consulta nuestras rutas de recolección y horarios de servicio</p>
+                </div>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="space-y-6 scroll-animate from-left">
+                        <div class="bg-gray-50 rounded-xl p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <h3 class="text-lg font-bold text-gray-900">Filtrar por Zona</h3>
+                                <button class="filter-toggle bg-primary text-white px-4 py-2 !rounded-button text-sm">
+                                    <i class="ri-filter-line mr-2"></i>Filtros
+                                </button>
+                            </div>
+                            <div class="filter-options hidden space-y-3">
+                                <div class="flex flex-wrap gap-2">
+                                    <button class="zone-filter bg-white border border-gray-200 px-3 py-1 rounded-full text-sm hover:bg-primary hover:text-white transition-colors" data-zone="norte">Norte</button>
+                                    <button class="zone-filter bg-white border border-gray-200 px-3 py-2 rounded-full text-sm hover:bg-primary hover:text-white transition-colors" data-zone="sur">Sur</button>
+                                    <button class="zone-filter bg-white border border-gray-200 px-3 py-1 rounded-full text-sm hover:bg-primary hover:text-white transition-colors" data-zone="este">Este</button>
+                                    <button class="zone-filter bg-white border border-gray-200 px-3 py-1 rounded-full text-sm hover:bg-primary hover:text-white transition-colors" data-zone="oeste">Oeste</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="space-y-4 max-h-[400px] overflow-y-auto"> <!-- Contenedor con scroll forzado -->
+                            <!-- Rutas visibles (ASOEX-001 a ASOEX-007) -->
+                            <!-- Macrorruta ASOEX-001 -->
+                            <div class="route-item bg-white border border-gray-200 rounded-xl p-6 cursor-pointer hover:shadow-lg transition-shadow" data-zone="sur" data-mapa="Recursos/MAPA-ASOEXISTO-001.jpg">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                                            <i class="ri-map-pin-line text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Macrorruta ASOEX-001</h4>
+                                            <p class="text-sm text-gray-600">Martes - Jueves - Sábado</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-semibold text-primary">06:00 AM - 04:00 PM</div>
+                                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                                    </div>
+                                </div>
+                                <div class="route-details hidden mt-4 pt-4 border-t">
+                                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <strong>Localidad/Barrios:</strong>
+                                            <ul class="text-gray-600 mt-1">
+                                                <li>SAN CRISTOBAL</li>
+                                                <li>Las Brisas, Buenos Aires, La roca, Calvo sur</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Macrorruta ASOEX-002 -->
+                            <div class="route-item bg-white border border-gray-200 rounded-xl p-6 cursor-pointer hover:shadow-lg transition-shadow" data-zone="sur" data-mapa="Recursos/MAPA ASOEXISTO 002.jpg">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
+                                            <i class="ri-map-pin-line text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Macrorruta ASOEX-002</h4>
+                                            <p class="text-sm text-gray-600">Martes - Jueves - Sábado</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-semibold text-primary">06:00 AM - 04:00 PM</div>
+                                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                                    </div>
+                                </div>
+                                <div class="route-details hidden mt-4 pt-4 border-t">
+                                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <strong>Localidad/Barrios:</strong>
+                                            <ul class="text-gray-600 mt-1">
+                                                <li>SAN CRISTOBAL</li>
+                                                <li>Buenos Aires, San Javier, Nariño sur, Santa ana sur</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Macrorruta ASOEX-003 -->
+                            <div class="route-item bg-white border border-gray-200 rounded-xl p-6 cursor-pointer hover:shadow-lg transition-shadow" data-zone="sur" data-mapa="Recursos/MAPA ASOEXISTO 003.jpg">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                                            <i class="ri-map-pin-line text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Macrorruta ASOEX-003</h4>
+                                            <p class="text-sm text-gray-600">Martes - Jueves - Sábado</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-semibold text-primary">06:00 AM - 04:00 PM</div>
+                                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                                    </div>
+                                </div>
+                                <div class="route-details hidden mt-4 pt-4 border-t">
+                                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <strong>Localidad/Barrios:</strong>
+                                            <ul class="text-gray-600 mt-1">
+                                                <li>SAN CRISTOBAL</li>
+                                                <li>Quindío, Sosiego, Velodromo, San cristobal, San Blass</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <!-- Macrorruta ASOEX-004 -->
+                             <div class="route-item bg-white border border-gray-200 rounded-xl p-6 cursor-pointer hover:shadow-lg transition-shadow" data-zone="sur" data-mapa="Recursos/MAPA ASOEXISTO 004.jpg">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
+                                            <i class="ri-map-pin-line text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Macrorruta ASOEX-004</h4>
+                                            <p class="text-sm text-gray-600">Martes - Jueves - Sábado</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-semibold text-primary">06:30 PM - 04:30 AM</div>
+                                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                                    </div>
+                                </div>
+                                <div class="route-details hidden mt-4 pt-4 border-t">
+                                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <strong>Localidad/Barrios:</strong>
+                                            <ul class="text-gray-600 mt-1">
+                                                <li>ANTONIO NARIÑO</li>
+                                                <li>Ciudad jardin, Ciudad berna, Sevilla, Policarpa</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <!-- Macrorruta ASOEX-005 -->
+                             <div class="route-item bg-white border border-gray-200 rounded-xl p-6 cursor-pointer hover:shadow-lg transition-shadow" data-zone="sur" data-mapa="Recursos/MAPA ASOEXISTO 005.jpg">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                                            <i class="ri-map-pin-line text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Macrorruta ASOEX-005</h4>
+                                            <p class="text-sm text-gray-600">Martes - Jueves - Sábado</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-semibold text-primary">06:30 PM - 04:30 AM</div>
+                                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                                    </div>
+                                </div>
+                                <div class="route-details hidden mt-4 pt-4 border-t">
+                                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <strong>Localidad/Barrios:</strong>
+                                            <ul class="text-gray-600 mt-1">
+                                                <li>ANTONIO NARIÑO</li>
+                                                <li>San antonio, La fragua, Restrepo, La Fragua, Santander</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Macrorruta ASOEX-006 -->
+                            <div class="route-item bg-white border border-gray-200 rounded-xl p-6 cursor-pointer hover:shadow-lg transition-shadow" data-zone="sur" data-mapa="Recursos/MAPA ASOEXISTO 006.jpg">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center">
+                                            <i class="ri-map-pin-line text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Macrorruta ASOEX-006</h4>
+                                            <p class="text-sm text-gray-600">Lunes - Miércoles - Viernes</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-semibold text-primary">06:30 PM - 04:30 AM</div>
+                                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                                    </div>
+                                </div>
+                                <div class="route-details hidden mt-4 pt-4 border-t">
+                                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <strong>Localidad/Barrios:</strong>
+                                            <ul class="text-gray-600 mt-1">
+                                                <li>RAFAEL URIBE URIBE</li>
+                                                <li>Quiroga sur, Santa lucia, Granjas de san pablo</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                             <!-- Macrorruta ASOEX-007 -->
+                             <div class="route-item bg-white border border-gray-200 rounded-xl p-6 cursor-pointer hover:shadow-lg transition-shadow" data-zone="sur" data-mapa="Recursos/MAPA ASOEXISTO 007.jpg">
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center space-x-4">
+                                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
+                                            <i class="ri-map-pin-line text-white"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold text-gray-900">Macrorruta ASOEX-007</h4>
+                                            <p class="text-sm text-gray-600">Lunes - Miércoles - Viernes</p>
+                                        </div>
+                                    </div>
+                                    <div class="text-right">
+                                        <div class="text-sm font-semibold text-primary">06:30 PM - 04:30 AM</div>
+                                        <i class="ri-arrow-down-s-line text-gray-400"></i>
+                                    </div>
+                                </div>
+                                <div class="route-details hidden mt-4 pt-4 border-t">
+                                    <div class="grid md:grid-cols-2 gap-4 text-sm">
+                                        <div>
+                                            <strong>Localidad/Barrios:</strong>
+                                            <ul class="text-gray-600 mt-1">
+                                                <li>RAFAEL URIBE URIBE</li>
+                                                <li>Marco fidel suarez, San jorge sur, El Consuelo, Molinos, Marruecos</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Mapa de Rutas -->
+                    <!-- Altura fija de 400px para que no se extienda con toda la lista de rutas. -->
+                    <div class="bg-gray-100 rounded-xl p-8 scroll-animate from-right">
+                        <h3 class="text-xl font-bold text-gray-900 mb-6">Mapa de Rutas</h3>
+                        <div class="relative h-[400px] bg-gray-200 rounded-xl overflow-hidden">
+                           <img id="routeMap" class="w-full h-full rounded-xl object-cover zoom-map" src="Recursos/MAPA-ASOEXISTO.jpg" alt="Mapa de rutas" loading="lazy" onclick="abrirMapa(this.src)">
+                            <div class="absolute top-4 left-4 bg-white p-3 rounded-lg shadow-lg">
+                                <div class="flex items-center space-x-2 text-sm">
+                                    <div class="w-3 h-3 bg-primary rounded-full"></div>
+                                    <span>Ruta Activa</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+       <section id="reportes"
+    class="py-20 bg-cover bg-left bg-no-repeat scroll-animate from-bottom"
+    style="background-color: #F2F8ED; background-image: url('Recursos/fondo reporte.png'); background-size: 25%; background-blend-mode: normal;">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Reporte de Toneladas</h2>
+                    <p class="text-xl text-gray-600">Seguimiento detallado de nuestro impacto en reciclaje</p>
+                </div>
+                <div class="bg-gray-50 rounded-2xl p-8">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="flex items-center space-x-4">
+                            <h3 class="text-2xl font-bold text-gray-900">Estadísticas de Reciclaje</h3>
+                            <div class="flex items-center space-x-2">
+                                <div class="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                                <span class="text-sm text-gray-600">Datos actualizados</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <button class="period-filter bg-white border border-gray-200 px-4 py-2 !rounded-button text-sm hover:bg-primary hover:text-white transition-colors" data-period="annual">Años Anteriores</button>
+                            <button class="period-filter bg-primary text-white px-4 py-2 !rounded-button text-sm" data-period="monthly">Mensual 2025</button>
+                        </div>
+                    </div>
+
+                    <div id="yearFilterButtons" class="sub-period-filters hidden">
+                        <button class="sub-period-filter-button" data-year="2023">2023</button>
+                        <button class="sub-period-filter-button active" data-year="2024">2024</button>
+                    </div>
+                    <div id="monthFilterButtons" class="sub-period-filters hidden">
+                        <button class="sub-period-filter-button" data-month="Ene">Ene</button>
+                        <button class="sub-period-filter-button" data-month="Feb">Feb</button>
+                        <button class="sub-period-filter-button" data-month="Mar">Mar</button>
+                        <button class="sub-period-filter-button" data-month="Abr">Abr</button>
+                        <button class="sub-period-filter-button" data-month="May">May</button>
+                        <button class="sub-period-filter-button" data-month="Jun">Jun</button>
+                        <button class="sub-period-filter-button" data-month="Jul">Jul</button>
+                        <button class="sub-period-filter-button active" data-month="Ago">Ago</button>
+                    </div>
+
+                    <div class="bg-white rounded-xl p-6 shadow-lg flex flex-col items-center justify-center space-y-8 lg:space-y-0 lg:flex-row lg:justify-around text-center mt-8">
+                        <div class="flex flex-col items-center space-y-2">
+                            <div class="text-2xl font-bold text-gray-700">Aprovechamiento</div>
+                            <div class="text-5xl font-extrabold text-primary"><span id="aprovechamientoValue">0</span> ton</div>
+                        </div>
+                        <div class="w-px h-24 bg-gray-200 hidden lg:block"></div>
+                        <div class="flex flex-col items-center space-y-2">
+                            <div class="text-2xl font-bold text-gray-700">Rechazo</div>
+                            <div class="text-5xl font-extrabold text-red-500"><span id="rechazoValue">0</span> ton</div>
+                        </div>
+                        <div class="w-px h-24 bg-gray-200 hidden lg:block"></div>
+                        <div class="flex flex-col items-center space-y-2">
+                            <div class="text-2xl font-bold text-gray-700">Transporte Total del Mes</div>
+                            <div class="text-5xl font-extrabold text-gray-900"><span id="transporteValue">0</span> ton</div>
+                        </div>
+                    </div>
+
+                    <div id="familyFilterButtons" class="sub-period-filters mt-8">
+                        <button class="sub-period-filter-button active" data-family="total">Todas las Familias</button>
+                        <button class="sub-period-filter-button" data-family="plastic">Plástico</button>
+                        <button class="sub-period-filter-button" data-family="paper">Papel</button>
+                        <button class="sub-period-filter-button" data-family="metals">Metales</button>
+                        <button class="sub-period-filter-button" data-family="glass">Vidrio</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 bg-primary"> 
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="text-center mb-16">
+      <h2 class="text-4xl font-bold text-white mb-4">Normatividad</h2>
+      <p class="text-xl text-green-100">Documentos legales y normativos que rigen nuestras operaciones</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- Tarjeta grande 1 -->
+      <div class="lg:col-span-2 scroll-animate from-bottom">
+        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow flex flex-col space-y-4">
+          <h3 class="text-xl font-bold text-gray-900">CCU</h3>
+          <div class="h-96 w-full overflow-hidden rounded-lg">
+            <iframe src="Recursos/CCU ASOEXISTO.pdf" class="w-full h-full" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tarjeta grande 2 -->
+      <div class="lg:col-span-2 scroll-animate from-bottom">
+        <div class="bg-white p-6 rounded-xl shadow-lg hover:shadow-xl transition-shadow flex flex-col space-y-4">
+          <h3 class="font-bold text-xl text-gray-900">CONCEPTO DE LEGALIDAD</h3>
+          <div class="h-96 w-full overflow-hidden rounded-lg">
+            <iframe src="recursos/decreto-0987-2024.pdf" class="w-full h-full" frameborder="0"></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- -----------------------
+     Tarjetas pequeñas
+     ----------------------- -->
+<div class="mt-10">
+
+  <!-- Fila 1 (4 tarjetas) -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+    <!-- 1 -->
+    <a href="Recursos/RESOLUCIÓN CRA 720 DE 2015.pdf" target="_blank" class="scroll-animate from-bottom card-link">
+      <div class="norma-card">
+        <div class="norma-icon"><i class="ri-file-pdf-line"></i></div>
+        <h3>Resolución CRA 720 de 2015</h3>
+        <p>Establece parámetros para el aprovechamiento de residuos sólidos.</p>
+      </div>
+    </a>
+
+    <!-- 2 -->
+    <a href="Recursos/Decreto 1713 de 2002.pdf" target="_blank" class="scroll-animate from-bottom card-link">
+      <div class="norma-card">
+        <div class="norma-icon"><i class="ri-file-pdf-line"></i></div>
+        <h3>Decreto 1713 de 2002</h3>
+        <p>Reglamenta la gestión integral de residuos sólidos en Colombia.</p>
+      </div>
+    </a>
+
+    <!-- 3 -->
+    <a href="Recursos/Decreto 596 de 2016.pdf" target="_blank" class="scroll-animate from-bottom card-link">
+      <div class="norma-card">
+        <div class="norma-icon"><i class="ri-file-pdf-line"></i></div>
+        <h3>Decreto 596 de 2016</h3>
+        <p>Define el esquema de aprovechamiento de residuos sólidos.</p>
+      </div>
+    </a>
+
+    <!-- 4 -->
+    <a href="Recursos/LEY 505 DE 1999.pdf" target="_blank" class="scroll-animate from-bottom card-link">
+      <div class="norma-card">
+        <div class="norma-icon"><i class="ri-file-pdf-line"></i></div>
+        <h3>Ley 505 de 1999</h3>
+        <p>Establece mecanismos de participación ciudadana en servicios públicos.</p>
+      </div>
+    </a>
+  </div>
+
+  <!-- Fila 2 (3 tarjetas centradas) -->
+  <!-- max-w controla el ancho: ajusta 'max-w-5xl' si quieres más/menos espacio -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8 max-w-4xl mx-auto">
+    <!-- 5 -->
+    <a href="Recursos/LEY 142 DE 1994.pdf" target="_blank" class="card-link scroll-animate from-bottom">
+      <div class="norma-card">
+        <div class="norma-icon"><i class="ri-file-pdf-line"></i></div>
+        <h3>Ley 142 de 1994</h3>
+        <p>Régimen de los servicios públicos domiciliarios.</p>
+      </div>
+    </a>
+
+    <!-- 6 -->
+    <a href="Recursos/LEY 689 DE 2001.pdf" target="_blank" class="card-link scroll-animate from-bottom">
+      <div class="norma-card">
+        <div class="norma-icon"><i class="ri-file-pdf-line"></i></div>
+        <h3>Ley 689 de 2001</h3>
+        <p>Modifica la Ley 142 para fortalecer el control y la vigilancia.</p>
+      </div>
+    </a>
+
+    <!-- 7 -->
+    <a href="Recursos/decreto1381-2024.pdf" target="_blank" class="card-link scroll-animate from-bottom">
+      <div class="norma-card">
+        <div class="norma-icon"><i class="ri-file-pdf-line"></i></div>
+        <h3>Decreto 1381 de 2024</h3>
+        <p>Actualiza disposiciones sobre el aprovechamiento de residuos.</p>
+      </div>
+    </a>
+    </div>
+  </div>
+</section>
+
+        <section id="tarifas" class="py-20 bg-white scroll-animate from-bottom">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold text-gray-900 mb-4">Tarifas de Operadores</h2>
+                    <p class="text-xl text-gray-600">Consulta las tarifas de los principales operadores de recolección en Bogotá.</p>
+                </div>
+                <div class="carousel-wrapper">
+                    <div class="carousel-track">
+                        <a href="https://arealimpia.com.co/precios-y-tarifas/" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/Arealimpia.png" alt="Logo de Área Limpia">
+                        </a>
+                        <a href="https://www.bogotalimpia.com/facturacion/" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/BOGOTALIMPIA.png" alt="Logo de Bogotá Limpia">
+                        </a>
+                        <a href="https://ciudadlimpiabogota.com.co/tarifas-ok/" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/ciudad limpia VERDE.png" alt="Logo de Ciudad Limpia">
+                        </a>
+                        <a href="https://www.lime.net.co/page/comercial/detalle?id=2" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/logo lime.png" alt="Logo de LIME">
+                        </a>
+                        <a href="https://www.promoambientaldistrito.com/servicios/" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/PROMOAMBIENTAL.png" alt="Logo de Promoambiental">
+                        </a>
+                        <a href="https://arealimpia.com.co/precios-y-tarifas/" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/Arealimpia.png" alt="Logo de Área Limpia">
+                        </a>
+                        <a href="https://www.bogotalimpia.com/facturacion/" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/BOGOTALIMPIA.png" alt="Logo de Bogotá Limpia">
+                        </a>
+                        <a href="https://ciudadlimpiabogota.com.co/tarifas-ok/" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/ciudad limpia VERDE.png" alt="Logo de Ciudad Limpia">
+                        </a>
+                        <a href="https://www.lime.net.co/page/comercial/detalle?id=2" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/logo lime.png" alt="Logo de LIME">
+                        </a>
+                        <a href="https://www.promoambientaldistrito.com/servicios/" target="_blank" class="tarifas-logo-container">
+                            <img src="Recursos/PROMOAMBIENTAL.png" alt="Logo de Promoambiental">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="contacto" class="py-20 bg-[#F2F8ED] scroll-animate from-bottom">
+  <div class="max-w-5xl mx-auto px-6">
+    <div class="text-center mb-10">
+      <h2 class="text-4xl font-bold text-[#1F4529] mb-2">Peticiones, Quejas, Reclamos o Felicitaciones</h2>
+      <p class="text-lg text-gray-700">Por favor completa el siguiente formulario de manera clara y precisa</p>
+    </div>
+
+    <!-- FORMULARIO -->
+    <form action="enviar_pqr.php" method="POST" class="bg-[#5F9D37] text-white rounded-2xl p-8 space-y-6 shadow-xl">
+      
+      <!-- Autorización -->
+      <div class="flex flex-wrap items-center justify-between text-sm">
+        <label class="w-full md:w-auto mb-2 md:mb-0">*¿Autoriza recibir notificaciones por correo electrónico?</label>
+        <div class="flex items-center space-x-4">
+          <label class="flex items-center"><input type="radio" name="autorizacion" value="Si" class="mr-2">Sí</label>
+          <label class="flex items-center"><input type="radio" name="autorizacion" value="No" class="mr-2">No</label>
+        </div>
+        <div class="flex items-center space-x-2 mt-3 md:mt-0">
+          <span>Cuenta contrato:</span>
+          <input type="text" name="cuenta" class="px-3 py-1 rounded text-black text-sm w-36 focus:ring-2 focus:ring-green-400 outline-none">
+        </div>
+      </div>
+
+      <hr class="border-white/40">
+
+      <!-- Datos del usuario -->
+      <h3 class="font-bold text-lg mt-4 mb-2">Datos del Usuario(a)</h3>
+      <div class="grid md:grid-cols-2 gap-4">
+        <input type="text" name="nombre" placeholder="Nombres y apellidos" required class="p-3 rounded text-black text-sm">
+        <input type="text" name="documento" placeholder="Documento de identidad" required class="p-3 rounded text-black text-sm">
+        <input type="text" name="telefono" placeholder="Teléfono" class="p-3 rounded text-black text-sm">
+        <input type="text" name="correo" placeholder="Correo electrónico" class="p-3 rounded text-black text-sm">
+        <input type="text" name="direccion" placeholder="Dirección" class="md:col-span-2 p-3 rounded text-black text-sm">
+      </div>
+
+      <hr class="border-white/40">
+
+      <!-- Datos donde ocurrió -->
+      <h3 class="font-bold text-lg mt-4 mb-2">Datos donde ocurrió la experiencia</h3>
+      <div class="grid md:grid-cols-2 gap-4">
+        <input type="text" name="eca" placeholder="ECA donde ocurrió la experiencia" class="p-3 rounded text-black text-sm">
+        <input type="text" name="area" placeholder="Área o lugar donde ocurrió" class="p-3 rounded text-black text-sm">
+        <input type="text" name="hora" placeholder="Hora de los hechos" class="p-3 rounded text-black text-sm">
+        <input type="text" name="fecha" placeholder="Fecha de los hechos (DD/MM/AAAA)" class="p-3 rounded text-black text-sm">
+        <input type="text" name="ciudad" placeholder="Ciudad / Municipio" class="md:col-span-2 p-3 rounded text-black text-sm">
+      </div>
+
+      <hr class="border-white/40">
+
+      <!-- Tipo de solicitud -->
+      <div>
+        <label class="font-bold text-lg">Tipo de solicitud</label>
+        <select name="tipo" required class="w-full mt-2 p-3 rounded text-black text-sm">
+          <option value="">Seleccionar tipo...</option>
+          <option value="Petición">Petición</option>
+          <option value="Queja">Queja</option>
+          <option value="Reclamo">Reclamo</option>
+          <option value="Felicitación">Felicitación</option>
+        </select>
+      </div>
+
+      <!-- Descripción -->
+      <div>
+        <label class="font-bold text-lg">Descripción</label>
+        <textarea name="descripcion" rows="5" required class="w-full mt-2 p-3 rounded text-black text-sm resize-none" placeholder="Describe claramente los hechos..."></textarea>
+      </div>
+
+      <!-- Botón -->
+      <div class="flex justify-center">
+        <button type="submit" class="bg-white text-[#5F9D37] px-10 py-3 rounded-lg font-semibold text-lg hover:bg-[#E8F5E1] transition-all shadow-md">
+          Enviar Solicitud
+        </button>
+      </div>
+    </form>
+  </div>
+</section>
+
+        <footer class="bg-gray-900 text-white py-16 scroll-animate from-bottom">
+  <div class="max-w-7xl mx-auto px-6">
+    <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+      
+      <!-- 🔹 LOGO PRINCIPAL -->
+      <div class="flex items-center justify-center">
+        <img src="Recursos/Logo footer blanco.png" alt="Logo ASOEXISTO" class="h-37 w-auto object-contain">
+      </div>
+
+      <!-- 🔹 Servicios -->
+      <div class="space-y-4">
+        <h4 class="font-bold text-lg">Servicios</h4>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-primary transition-colors">Recolección Domiciliaria</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Gestión Empresarial</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Capacitación</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Procesamiento</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Participación Comunitaria</a></li>
+        </ul>
+      </div>
+
+      <!-- 🔹 Información -->
+      <div class="space-y-4">
+        <h4 class="font-bold text-lg">Información</h4>
+        <ul class="space-y-2 text-gray-400">
+          <li><a href="#" class="hover:text-primary transition-colors">Quiénes Somos</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Rutas y Horarios</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Reportes</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Normatividad</a></li>
+          <li><a href="#" class="hover:text-primary transition-colors">Blog</a></li>
+        </ul>
+      </div>
+
+      <!-- 🔹 Contacto -->
+      <div class="space-y-4">
+        <h4 class="font-bold text-lg">Contacto</h4>
+        <div class="space-y-3 text-gray-400">
+          <div class="flex items-center space-x-3">
+            <i class="ri-phone-line text-primary"></i>
+            <span>304 395 0827</span>
+          </div>
+          <div class="flex items-center space-x-3">
+            <i class="ri-mail-line text-primary"></i>
+            <span>asoexisto@gmail.com</span>
+          </div>
+          <div class="flex items-start space-x-3">
+            <i class="ri-map-pin-line text-primary mt-1"></i>
+            <span>KR 14 # 4 SUR - 28<br>Bogotá, Colombia</span>
+          </div>
+          <div class="flex items-center space-x-3 mt-4">
+            <img src="Recursos/vigilado.png" alt="Vigilado" class="h-24 w-auto">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 🔹 Parte inferior -->
+    <div class="border-t border-gray-800 pt-8">
+      <div class="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <p class="text-gray-400 text-sm">
+          © 2025 Asociación de Recicladores Existo Ambiental. Todos los derechos reservados.
+        </p>
+        <div class="flex space-x-6 text-sm text-gray-400">
+          <a href="#" class="hover:text-primary transition-colors">Política de Privacidad</a>
+          <a href="#" class="hover:text-primary transition-colors">Términos de Uso</a>
+          <a href="#" class="hover:text-primary transition-colors">Cookies</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+    <script id="objectiveInteractions">
+        document.addEventListener('DOMContentLoaded', function() {
+            const objectiveCards = document.querySelectorAll('.objective-card');
+            objectiveCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    const details = this.querySelector('.objective-details');
+                    const isHidden = details.classList.contains('hidden');
+                    objectiveCards.forEach(otherCard => {
+                        otherCard.querySelector('.objective-details').classList.add('hidden');
+                        otherCard.classList.remove('ring-2', 'ring-primary');
+                    });
+                    if (isHidden) {
+                        details.classList.remove('hidden');
+                        this.classList.add('ring-2', 'ring-primary');
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script id="serviceInteractions">
+        document.addEventListener('DOMContentLoaded', function() {
+            const serviceCards = document.querySelectorAll('.service-card');
+            serviceCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const details = this.querySelector('.service-details');
+                    details.classList.add('show-details');
+                    const barrita = this.querySelector('.service-barrita');
+                    barrita.style.width = '100%';
+                    barrita.style.opacity = '1';
+                });
+                card.addEventListener('mouseleave', function() {
+                    const details = this.querySelector('.service-details');
+                    details.classList.remove('show-details');
+                    const barrita = this.querySelector('.service-barrita');
+                    barrita.style.width = '0%';
+                    barrita.style.opacity = '0';
+                });
+            });
+        });
+    </script>
+
+    <script id="routeInteractions">
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterToggle = document.querySelector('.filter-toggle');
+            const filterOptions = document.querySelector('.filter-options');
+            const zoneFilters = document.querySelectorAll('.zone-filter');
+            const routeItems = document.querySelectorAll('.route-item');
+            const routeMap = document.getElementById('routeMap');
+            const mapUrls = {
+                'norte': 'https://maps.app.goo.gl/r2ZZ5e3kgvGigrag9',
+                'sur': 'https://maps.app.goo.gl/fZGV1aJMhJL2TwYj7',
+                'este': 'https://maps.app.goo.gl/Q34YT36s61CWfYpA8',
+                'oeste': 'https://maps.app.goo.gl/Q34YT36s61CWfYpA8'
+            };
+            filterToggle.addEventListener('click', function() {
+                filterOptions.classList.toggle('hidden');
+            });
+            zoneFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    const zone = this.dataset.zone;
+                    zoneFilters.forEach(f => f.classList.remove('bg-primary', 'text-white'));
+                    this.classList.add('bg-primary', 'text-white');
+                    routeItems.forEach(item => {
+                        if (zone === 'all' || item.dataset.zone === zone) {
+                            item.style.display = 'block';
+                        } else {
+                            item.style.display = 'none';
+                        }
+                    });
+                });
+            });
+            routeItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const zone = this.dataset.zone;
+                    const details = this.querySelector('.route-details');
+                    const arrow = this.querySelector('i[class*="arrow"]');
+                    details.classList.toggle('hidden');
+                    arrow.classList.toggle('ri-arrow-down-s-line');
+                    arrow.classList.toggle('ri-arrow-up-s-line');
+                    if (mapUrls[zone]) {
+                        routeMap.src = mapUrls[zone];
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script id="operationInteractions">
+        document.addEventListener('DOMContentLoaded', function() {
+            const operationItems = document.querySelectorAll('.operation-item');
+            operationItems.forEach(item => {
+                item.addEventListener('click', function() {
+                    const details = this.querySelector('.operation-details');
+                    const arrow = this.querySelector('i[class*="arrow"]');
+                    details.classList.toggle('hidden');
+                    arrow.classList.toggle('ri-arrow-down-s-line');
+                    arrow.classList.toggle('ri-arrow-up-s-line');
+                });
+            });
+        });
+    </script>
+
+    <script id="chartInteractions">
+        document.addEventListener('DOMContentLoaded', function() {
+            const tonnageDisplay = {
+                aprovechamiento: document.getElementById('aprovechamientoValue'),
+                rechazo: document.getElementById('rechazoValue'),
+                transporte: document.getElementById('transporteValue')
+            };
+            const periodFilters = document.querySelectorAll('.period-filter');
+            const yearFilterButtonsContainer = document.getElementById('yearFilterButtons');
+            const monthFilterButtonsContainer = document.getElementById('monthFilterButtons');
+            const yearFilterButtons = yearFilterButtonsContainer.querySelectorAll('.sub-period-filter-button');
+            const monthFilterButtons = monthFilterButtonsContainer.querySelectorAll('.sub-period-filter-button');
+            const familyFilterButtonsContainer = document.getElementById('familyFilterButtons');
+            const familyFilterButtons = familyFilterButtonsContainer.querySelectorAll('.sub-period-filter-button');
+
+            const data = {
+                years: {
+                    '2023': {
+                        total: { aprovechamiento: 6800, rechazo: 1700, transporte: 8500 },
+                        plastic: { aprovechamiento: 2000, rechazo: 500, transporte: 2500 },
+                        paper: { aprovechamiento: 2500, rechazo: 600, transporte: 3100 },
+                        metals: { aprovechamiento: 1500, rechazo: 400, transporte: 1900 },
+                        glass: { aprovechamiento: 800, rechazo: 200, transporte: 1000 }
+                    },
+                    '2024': {
+                        total: { aprovechamiento: 9960, rechazo: 2490, transporte: 12450 },
+                        plastic: { aprovechamiento: 3000, rechazo: 750, transporte: 3750 },
+                        paper: { aprovechamiento: 3500, rechazo: 800, transporte: 4300 },
+                        metals: { aprovechamiento: 2000, rechazo: 500, transporte: 2500 },
+                        glass: { aprovechamiento: 1460, rechazo: 440, transporte: 1900 }
+                    }
+                },
+                months: {
+                    'Ene': {
+                        // Suma de aprovechamiento: 193.4 + 172.3 + 28.0 + 25.9 = 419.6
+                        // Suma de rechazo: 1.9 + 1.7 + 0.1 + 0.2 = 3.9
+                        total: { aprovechamiento: 419.6, rechazo: 3.9, transporte: 426.0 },
+                        plastic: { aprovechamiento: 193.4, rechazo: 1.9, transporte: 426.0 },
+                        paper: { aprovechamiento: 172.3, rechazo: 1.7, transporte: 426.0 },
+                        metals: { aprovechamiento: 28.0, rechazo: 0.1, transporte: 426.0 },
+                        glass: { aprovechamiento: 25.9, rechazo: 0.2, transporte: 426.0 }
+                    },
+                    'Feb': {
+                        // Suma de aprovechamiento: 194.0 + 173.1 + 28.1 + 25.9 = 421.1
+                        // Suma de rechazo: 1.9 + 1.7 + 0.2 + 0.2 = 4.0
+                        total: { aprovechamiento: 421.1, rechazo: 4.0, transporte: 427.5 },
+                        plastic: { aprovechamiento: 194.0, rechazo: 1.9, transporte: 427.5 },
+                        paper: { aprovechamiento: 173.1, rechazo: 1.7, transporte: 427.5 },
+                        metals: { aprovechamiento: 28.1, rechazo: 0.2, transporte: 427.5 },
+                        glass: { aprovechamiento: 25.9, rechazo: 0.2, transporte: 427.5 }
+                    },
+                    'Mar': {
+                        // Suma de aprovechamiento: 194.3 + 173.2 + 28.3 + 26.3 = 422.1
+                        // Suma de rechazo: 1.9 + 2.1 + 0.3 + 0.1 = 4.4
+                        total: { aprovechamiento: 422.1, rechazo: 4.4, transporte: 429.3 },
+                        plastic: { aprovechamiento: 194.3, rechazo: 1.9, transporte: 429.3 },
+                        paper: { aprovechamiento: 173.2, rechazo: 2.1, transporte: 429.3 },
+                        metals: { aprovechamiento: 28.3, rechazo: 0.3, transporte: 429.3 },
+                        glass: { aprovechamiento: 26.3, rechazo: 0.1, transporte: 429.3 }
+                    },
+                    'Abr': {
+                        // Suma de aprovechamiento: 194.8 + 113.6 + 28.4 + 26.3 = 363.1
+                        // Suma de rechazo: 2.0 + 1.2 + 0.2 + 0.2 = 3.6
+                        total: { aprovechamiento: 363.1, rechazo: 3.6, transporte: 368.4 },
+                        plastic: { aprovechamiento: 194.8, rechazo: 2.0, transporte: 368.4 },
+                        paper: { aprovechamiento: 113.6, rechazo: 1.2, transporte: 368.4 },
+                        metals: { aprovechamiento: 28.4, rechazo: 0.2, transporte: 368.4 },
+                        glass: { aprovechamiento: 26.3, rechazo: 0.2, transporte: 368.4 }
+                    },
+                    'May': {
+                        // Suma de aprovechamiento: 194.9 + 174.5 + 28.4 + 26.3 = 424.1 (Error en la suma anterior, corregido)
+                        // Suma de rechazo: 2.1 + 1.9 + 0.1 + 0.2 = 4.3
+                        total: { aprovechamiento: 424.2, rechazo: 4.3, transporte: 430.9 },
+                        plastic: { aprovechamiento: 194.9, rechazo: 2.1, transporte: 430.9 },
+                        paper: { aprovechamiento: 174.5, rechazo: 1.9, transporte: 430.9 },
+                        metals: { aprovechamiento: 28.4, rechazo: 0.1, transporte: 430.9 },
+                        glass: { aprovechamiento: 26.3, rechazo: 0.2, transporte: 430.9 }
+                    },
+                    'Jun': {
+                        // Suma de aprovechamiento: 195.2 + 174.8 + 28.5 + 26.4 = 424.9
+                        // Suma de rechazo: 1.8 + 1.6 + 0.3 + 0.3 = 4.0 (Corregido a 3.9)
+                        total: { aprovechamiento: 424.9, rechazo: 3.9, transporte: 431.2 },
+                        plastic: { aprovechamiento: 195.2, rechazo: 1.8, transporte: 431.2 },
+                        paper: { aprovechamiento: 174.8, rechazo: 1.6, transporte: 431.2 },
+                        metals: { aprovechamiento: 28.5, rechazo: 0.3, transporte: 431.2 },
+                        glass: { aprovechamiento: 26.4, rechazo: 0.3, transporte: 431.2 }
+                    },
+                    'Jul': {
+                        // Suma de aprovechamiento: 193.9 + 173.4 + 28.2 + 26.2 = 421.7
+                        // Suma de rechazo: 1.8 + 1.6 + 0.3 + 0.2 = 3.9
+                        total: { aprovechamiento: 421.7, rechazo: 3.9, transporte: 427.6 },
+                        plastic: { aprovechamiento: 193.9, rechazo: 1.8, transporte: 427.6 },
+                        paper: { aprovechamiento: 173.4, rechazo: 1.6, transporte: 427.6 },
+                        metals: { aprovechamiento: 28.2, rechazo: 0.3, transporte: 427.6 },
+                        glass: { aprovechamiento: 26.2, rechazo: 0.2, transporte: 427.6 }
+                    },
+                    'Ago': {
+                        // Suma de aprovechamiento: 194.2 + 173.8 + 28.3 + 26.3 = 422.6
+                        // Suma de rechazo: 1.7 + 1.6 + 0.2 + 0.2 = 3.7
+                        total: { aprovechamiento: 422.6, rechazo: 3.7, transporte: 429.6 },
+                        plastic: { aprovechamiento: 194.2, rechazo: 1.7, transporte: 429.6 },
+                        paper: { aprovechamiento: 173.8, rechazo: 1.6, transporte: 429.6 },
+                        metals: { aprovechamiento: 28.3, rechazo: 0.2, transporte: 429.6 },
+                        glass: { aprovechamiento: 26.3, rechazo: 0.2, transporte: 429.6 }
+                    }
+                }
+            };
+        
+            let currentActivePeriod = 'monthly';
+            let currentActiveSubPeriod = 'Ago';
+            let currentActiveFamily = 'total';
+        
+            function animateNumber(element, start, end, duration) {
+                if (!element) return;
+                let startTime = null;
+                const step = (currentTime) => {
+                    if (!startTime) startTime = currentTime;
+                    const progress = Math.min((currentTime - startTime) / duration, 1);
+                    const value = (progress * (end - start) + start);
+                    element.textContent = value.toLocaleString('es-ES', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+                    if (progress < 1) {
+                        requestAnimationFrame(step);
+                    }
+                };
+                requestAnimationFrame(step);
+            }
+        
+            function updateAllReportValues() {
+                let periodData;
+                if (currentActivePeriod === 'annual') {
+                    periodData = data.years[currentActiveSubPeriod];
+                } else {
+                    periodData = data.months[currentActiveSubPeriod];
+                }
+        
+                const familyData = periodData[currentActiveFamily];
+        
+                if (tonnageDisplay.aprovechamiento) {
+                    animateNumber(tonnageDisplay.aprovechamiento, 0, familyData.aprovechamiento, 1500);
+                }
+                if (tonnageDisplay.rechazo) {
+                    animateNumber(tonnageDisplay.rechazo, 0, familyData.rechazo, 1500);
+                }
+                if (tonnageDisplay.transporte) {
+                    animateNumber(tonnageDisplay.transporte, 0, familyData.transporte, 1500);
+                }
+            }
+        
+            periodFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    periodFilters.forEach(f => {
+                        f.classList.remove('bg-primary', 'text-white');
+                        f.classList.add('bg-white', 'border-gray-200');
+                    });
+                    this.classList.add('bg-primary', 'text-white');
+                    this.classList.remove('bg-white', 'border-gray-200');
+        
+                    currentActivePeriod = this.dataset.period;
+                    currentActiveFamily = 'total';
+        
+                    familyFilterButtons.forEach(btn => {
+                        if (btn.dataset.family === 'total') {
+                            btn.classList.add('active');
+                        } else {
+                            btn.classList.remove('active');
+                        }
+                    });
+        
+                    if (currentActivePeriod === 'annual') {
+                        yearFilterButtonsContainer.classList.remove('hidden');
+                        monthFilterButtonsContainer.classList.add('hidden');
+                        yearFilterButtons.forEach(btn => {
+                            if (btn.dataset.year === '2024') {
+                                btn.classList.add('active');
+                                currentActiveSubPeriod = '2024';
+                            } else {
+                                btn.classList.remove('active');
+                            }
+                        });
+                    } else if (currentActivePeriod === 'monthly') {
+                        yearFilterButtonsContainer.classList.add('hidden');
+                        monthFilterButtonsContainer.classList.remove('hidden');
+                        monthFilterButtons.forEach(btn => {
+                            if (btn.dataset.month === 'Ago') {
+                                btn.classList.add('active');
+                                currentActiveSubPeriod = 'Ago';
+                            } else {
+                                btn.classList.remove('active');
+                            }
+                        });
+                    }
+                    updateAllReportValues();
+                });
+            });
+        
+            yearFilterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    yearFilterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentActiveSubPeriod = this.dataset.year;
+                    updateAllReportValues();
+                });
+            });
+        
+            monthFilterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    monthFilterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentActiveSubPeriod = this.dataset.month;
+                    updateAllReportValues();
+                });
+            });
+        
+            familyFilterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    familyFilterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    currentActiveFamily = this.dataset.family;
+                    updateAllReportValues();
+                });
+            });
+        
+            const reportesSection = document.getElementById('reportes');
+            if (reportesSection) {
+                const observerOptions = {
+                    root: null,
+                    rootMargin: '0px',
+                    threshold: 0.1
+                };
+        
+                const sectionObserver = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            updateAllReportValues();
+                        } else {
+                            if (tonnageDisplay.aprovechamiento) tonnageDisplay.aprovechamiento.textContent = '0';
+                            if (tonnageDisplay.rechazo) tonnageDisplay.rechazo.textContent = '0';
+                            if (tonnageDisplay.transporte) tonnageDisplay.transporte.textContent = '0';
+                        }
+                    });
+                }, observerOptions);
+        
+                sectionObserver.observe(reportesSection);
+            }
+        
+            const monthlyFilterButton = document.querySelector('.period-filter[data-period="monthly"]');
+            if (monthlyFilterButton) {
+                monthlyFilterButton.click();
+            }
+        });
+    </script>
+        
+    <script id="scrollAnimations">
+        document.addEventListener('DOMContentLoaded', function() {
+          const sectionsToAnimate = document.querySelectorAll('.scroll-animate');
+        
+          const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.1
+          };
+        
+          const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('animated');
+              } else {
+                entry.target.classList.remove('animated');
+              }
+            });
+          }, observerOptions);
+        
+          sectionsToAnimate.forEach(section => {
+            observer.observe(section);
+          });
+        });
+    </script>
+  <!-- Modal para ver el mapa en grande -->
+<div id="mapModal" class="map-modal" onclick="cerrarMapa()">
+  <span class="cerrar">&times;</span>
+  <img class="map-modal-content" id="imgAmpliada">
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+  const mapa = document.getElementById("routeMap");
+  const rutaPorDefecto = "Recursos/MAPA-ASOEXISTO.jpg"; // asegúrate de que el nombre es exacto
+  const tarjetas = document.querySelectorAll(".route-item[data-mapa]");
+
+  console.log("✅ Script combinado iniciado...");
+  console.log("Mapa encontrado:", mapa);
+  console.log("Total de tarjetas:", tarjetas.length);
+
+  if (!mapa) return alert("No se encontró el elemento con id='routeMap'");
+
+  // Mostrar mapa general por defecto
+  mapa.src = rutaPorDefecto;
+
+  tarjetas.forEach((tarjeta, index) => {
+    tarjeta.addEventListener("click", () => {
+      console.log(`🟦 Click en tarjeta [${index}]`);
+
+      const detalles = tarjeta.querySelector(".route-details");
+      const visible = detalles && !detalles.classList.contains("hidden");
+
+      console.log("¿Detalles visibles?:", visible);
+      console.log("Ruta del mapa:", tarjeta.getAttribute("data-mapa"));
+
+      if (visible) {
+        const nuevaRuta = tarjeta.getAttribute("data-mapa");
+        mapa.src = nuevaRuta;
+        console.log("📍 Mostrando mapa:", nuevaRuta);
+      } else {
+        mapa.src = rutaPorDefecto;
+        console.log("↩️ Volviendo al mapa general");
+      }
+    });
+  });
+});
+
+// ==== Funciones del modal ====
+function abrirMapa(src) {
+  const modal = document.getElementById("mapModal");
+  const img = document.getElementById("imgAmpliada");
+  img.src = src;
+  modal.style.display = "flex";
+}
+
+function cerrarMapa() {
+  document.getElementById("mapModal").style.display = "none";
+}
+</script>
+</body>
+</html>
