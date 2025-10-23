@@ -2,7 +2,7 @@
 
 **Cliente:** Asociación de Recicladores Existo Ambiental (ASOEXISTO)  
 **Rol:** Desarrollador Web & Analista de Datos  
-**Diseño:** Área de Publicidad de ASOEXISTO  
+**Diseño:** Área de Publicidad  
 **Tecnologías:** HTML5, CSS3, JavaScript (Vanilla)  
 **Desarrollador:** Sebastián Ramírez
 
