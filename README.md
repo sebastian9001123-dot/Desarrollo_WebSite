@@ -10,7 +10,7 @@ Utilizo el desarrollo web como herramienta complementaria para presentar anális
 ### 📊 Análisis de Datos
 - **Bases de Datos**: Oracle SQL, MySQL
 - **Herramientas BI**: Power BI, Tableau
-- **Lenguajes**: Python (pandas, numpy), SQL Avanzado
+- **Lenguajes**: Python (pandas, numpy), SQL, JavaScript
 - **Procesos**: ETL, Reporting, Dashboards
 
 ### 🌐 Desarrollo Web (Habilidades Complementarias)
