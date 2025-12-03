@@ -3,7 +3,7 @@
 ## 👨‍💻 Sobre Mí
 
 Soy analista de datos especializado en transformar datos complejos en insights accionables. 
-Utilizo el desarrollo web como herramienta complementaria para presentar análisis de manera efectiva.
+Utilizo el desarrollo web como herramienta complementaria como hobby para ayudarme a practicar los lenjuajes de desarrollo.
 
 ## 🛠️ Habilidades Técnicas
 
