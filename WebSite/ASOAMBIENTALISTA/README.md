@@ -114,4 +114,4 @@ Este proyecto profundizó en el desarrollo de sitios institucionales optimizados
 
 **Desarrollado por:** Sebastián Ramírez  
 **Proyecto:** Sitio Web ASOAMBIENTALISTA  
-**Estado:** 🟢 En producción
+**Estado:** 🟢 Terminado
