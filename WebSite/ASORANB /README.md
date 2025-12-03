@@ -130,4 +130,4 @@ La integración de métricas ambientales en un entorno visual accesible permiti�
 
 **Desarrollado por:** Sebastián Ramírez | Analista de Datos & Desarrollador  
 **Colaboración:** Área de Publicidad ASORANB  
-**Estado:** 🟢 En producción – [asoranb.com](https://asoranb.com/)
+**Estado:** 🟢 Terminado – [asoranb.com](https://asoranb.com/)
