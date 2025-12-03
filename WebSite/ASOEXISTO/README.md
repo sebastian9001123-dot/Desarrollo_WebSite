@@ -1,7 +1,7 @@
 # 🌿 Sitio Web ASOEXISTO
 
 **Cliente:** Asociación de Recicladores Existo Ambiental (ASOEXISTO)  
-**Rol:** Desarrollador Web & Analista de Datos  
+**Rol:** Desarrollador Web   
 **Diseño:** Área de Publicidad  
 **Tecnologías:** HTML5, CSS3, JavaScript (Vanilla)  
 **Desarrollador:** Sebastián Ramírez
@@ -139,5 +139,5 @@ La integración de **análisis de datos en interfaces web** permitió comunicar 
 ---
 
 **Desarrollado por:** Sebastián Ramírez | Analista de Datos & Desarrollador  
-**Colaboración:** Área de Publicidad ASOEXISTO  
-**Estado:** 🟢 En producción - [asoexisto.com](https://asoexisto.com)
+**Colaboración:** Área de Publicidad  
+**Estado:** 🟢 Terminado - [asoexisto.com](https://asoexisto.com)
