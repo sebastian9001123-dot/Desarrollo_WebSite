@@ -126,6 +126,8 @@ Este proyecto fortaleció mi experiencia en el desarrollo de **sitios web instit
 
 La integración de métricas ambientales en un entorno visual accesible permitió comunicar de manera clara el impacto positivo de la organización.
 
+> 💼 **Portafolio Profesional** - Este proyecto ejemplifica mi capacidad para desarrollar soluciones web completas que combinan **análisis de datos con desarrollo frontend**, creando experiencias digitales que comunican efectivamente y generan impacto positivo.
+
 ---
 
 **Desarrollado por:** Sebastián Ramírez | Analista de Datos & Desarrollador  
