@@ -110,6 +110,8 @@ El sitio fue desarrollado con tecnologías nativas, optimización para alto rend
 
 Este proyecto profundizó en el desarrollo de sitios institucionales optimizados, con estructuras separadas por módulos, integrando animaciones personalizadas, diseño responsivo y organización profesional del código.
 
+> 💼 **Portafolio Profesional** - Este proyecto ejemplifica mi capacidad para desarrollar soluciones web completas que combinan **análisis de datos con desarrollo frontend**, creando experiencias digitales que comunican efectivamente y generan impacto positivo.
+
 ---
 
 **Desarrollado por:** Sebastián Ramírez  
