@@ -28,7 +28,7 @@ Sitio web desarrollado para la Asociación de Recicladores Anillo Ambiental.
 ## 📫 Contacto
 
 - 📧 **Email**: [sebastian.9001123@gmail.com](sebastian.9001123@gmail.com)
-- 💼 **LinkedIn**: [Juan Sebastian Ramirez](www.linkedin.com/in/juan-sebastian-ramirez-9a534b242)
+- 💼 **LinkedIn**: [Juan Sebastian Ramirez](https://www.linkedin.com/in/juan-sebastian-ramirez-9a534b242/)
 
 
 ---
